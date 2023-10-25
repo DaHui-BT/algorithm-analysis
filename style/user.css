@@ -3,6 +3,20 @@ body,html {
   /*--r-block-margin: 10px;*/
 }
 
+.reveal blockquote {
+  border-left: 4px solid #dfe2e5;
+  padding: 0 15px;
+  color: #777777;
+  box-shadow: 0px 0px 2px 2px #eee;
+  box-sizing: border-box;
+  font-style: normal;
+}
+
+blockquote > p {
+  line-height: 1.1em!important;
+  font-size: 15px;
+}
+
 section.stack::before {
   height: 5px;
   content: "";
@@ -12,10 +26,10 @@ section.stack::before {
 
 section.stack {
   border: 1px solid #aaa;
+  border-radius: 5px;
   height: 100%;
   padding: 30px 0px;
   box-sizing: border-box;
-
 }
 
 .slide .level2 {
@@ -42,6 +56,10 @@ section.stack {
 .reveal pre {
   width: 98%;
   margin: 5px;
+  box-shadow: none;
+  color: #777;
+  border: 1px solid #e7eaed;
+  background-color: #fafafa;
 }
 
 div.sourceCode {
@@ -51,6 +69,7 @@ div.sourceCode {
 .reveal pre code {
   font-size: 16px;
   line-height: 1.2em;
+  max-height: 350px;
 }
 
 li {

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>算法分析</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/white.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">算法分析</h1>
+</section>
+
+<section class="slide level2">
+
+<p>汇报人：王立辉</p>
+<p><link rel="stylesheet" href="style/user.css"></p>
+</section>
+<section>
+<section id="贪心算法" class="title-slide slide level1">
+<h1>贪心算法</h1>
+
+</section>
+<section id="题目描述" class="slide level2">
+<h2>题目描述</h2>
+<p><a href="https://leetcode.cn/problems/remove-k-digits/">402. 移掉 K 位数字</a>【中等】</p>
+<p>给你一个以字符串表示的非负整数 <code>num</code> 和一个整数 <code>k</code> ，移除这个数中的 <code>k</code> 位数字，使得剩下的数字最小。请你以字符串形式返回这个最小的数字。</p>
+<p><strong>示例 1 ：</strong></p>
+<pre><code>输入：num = &quot;1432219&quot;, k = 3
+输出：&quot;1219&quot;
+解释：移除掉三个数字 4, 3, 和 2 形成一个新的最小的数字 1219 。</code></pre>
+<p><strong>示例 2 ：</strong></p>
+<pre><code>输入：num = &quot;10200&quot;, k = 1
+输出：&quot;200&quot;
+解释：移掉首位的 1 剩下的数字为 200. 注意输出不能有任何前导零。</code></pre>
+<p><strong>示例 3 ：</strong></p>
+<pre><code>输入：num = &quot;10&quot;, k = 2
+输出：&quot;0&quot;
+解释：从原数字移除所有的数字，剩余为空就是 0 。</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= k &lt;= num.length &lt;= 105</code></li>
+<li><code>num</code> 仅由若干位数字（0 - 9）组成</li>
+<li>除了 <strong>0</strong> 本身之外，<code>num</code> 不含任何前导零</li>
+</ul>
+</section>
+<section id="解题思路" class="slide level2">
+<h2>解题思路：</h2>
+<p><strong>思想一（暴力破解）：</strong></p>
+<ul>
+<li>当需要删除数字长度等于数字字符长度时 == &gt; 直接返回 <code>"0"</code></li>
+<li>当数字字符中存在逆序数字时 == &gt; 从前往后删除造成逆序的逆序数</li>
+<li>当删除所有逆序数字时，还不满足要删除个数时 == &gt; 从后往前删除，即删除最大数字</li>
+</ul>
+<p><strong>思想二（贪心算法）：</strong></p>
+<blockquote>
+<p>方法一所使用循环遍历整个数组的开销 + 移动数组的开销 ==&gt; O(n^2) 级别，开销过大</p>
+<p>改进办法：采用堆栈优化移动数组的时间开销</p>
+</blockquote>
+<ul>
+<li>将每次访问的数字（该数字大于等于堆栈中最顶部的元素）存入栈中</li>
+<li>当每次访问的数字（该数字小于堆栈中最顶部的元素）则从堆栈中弹出最顶部元素，并继续进行比较</li>
+<li>当处理完整个数组后，如果此时需要删除字符的个数仍未满足，则将 top 值改为还需要删除的个数</li>
+<li>当最终完成删除字符个数后
+<ul>
+<li>判断该数组是否为空，为空则返回 0</li>
+<li>当该数组以 0 开始时则返回第一个非 0 位置的元素地址。</li>
+<li>全为 0 则只需返回含有一个 0 元素的字符数组</li>
+</ul></li>
+</ul>
+</section>
+<section id="头文件及宏" class="slide level2">
+<h2>头文件及宏</h2>
+<p>所使用头文件：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp"># include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp"># include </span><span class="im">&lt;stdlib.h&gt;</span></span></code></pre></div>
+<p>项目中所定义的宏：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># define IS_INVERSE(X,Y) (X &gt; Y ? 1 : 0)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp"># define INDEX_CORRECT(I) (I = I &lt; 0 ? 0 : I)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">// improve</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp"># define POP_STACK stack[top --]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="pp"># define PUSH_STACK stack[top ++] = num[i]</span></span></code></pre></div>
+<p>执行函数：</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> execRemoveKdigits<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1432219&quot;, k = 3;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;10200&quot;, k = 1;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;9&quot;, k = 1;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;100&quot;, k = 1;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;112&quot;, k = 1;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1234567890&quot;, k = 9;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> num<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;10001&quot;</span><span class="op">,</span> k <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> res <span class="op">=</span> removeKdigits<span class="op">(</span>num<span class="op">,</span> k<span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;the minmum number is %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> res<span class="op">);</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="函数主体" class="slide level2">
+<h2>函数主体</h2>
+<p>功能函数：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> removeKdigit<span class="op">(</span><span class="dt">char</span><span class="op">*</span> num<span class="op">,</span> <span class="dt">int</span> index<span class="op">,</span> <span class="dt">int</span> length<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(;</span> index <span class="op">&lt;</span> length <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> <span class="op">++</span> index<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    num<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> num<span class="op">[</span>index <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  num<span class="op">[</span>length <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;\0&#39;</span><span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>函数主体：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span><span class="op">*</span> removeKdigits<span class="op">(</span><span class="dt">char</span><span class="op">*</span> num<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> len_s <span class="op">=</span> strlen<span class="op">(</span>num<span class="op">),</span> temp <span class="op">=</span> k<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// when the num length is 1 and the remove number is the same as length of num</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>len_s <span class="op">==</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    num<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;0&#39;</span><span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> num<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// when the num contain inverse order</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> len_s <span class="op">-</span> <span class="dv">1</span> <span class="op">&amp;&amp;</span> temp <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> <span class="op">++</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    INDEX_CORRECT<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>IS_INVERSE<span class="op">(</span>num<span class="op">[</span>i<span class="op">],</span> num<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">]))</span> <span class="op">{</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      removeKdigit<span class="op">(</span>num<span class="op">,</span> i<span class="op">,</span> len_s <span class="op">-</span> k <span class="op">+</span> temp<span class="op">);</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      i <span class="op">-=</span> <span class="dv">2</span><span class="op">;</span> temp <span class="op">--;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// when the num not contain inverse order</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">// then remove the last one</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>temp <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    num<span class="op">[</span>len_s <span class="op">-</span> k<span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;\0&#39;</span><span class="op">;</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">// judge the num is start at 0 or the num is &quot;&quot;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>strcmp<span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">,</span> num<span class="op">)</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> <span class="co">// the num is &quot;&quot;</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    num<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;0&#39;</span><span class="op">;</span> num<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;\0&#39;</span><span class="op">;</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>num<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;0&#39;</span> <span class="op">&amp;&amp;</span> num<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">!=</span> <span class="ch">&#39;\0&#39;</span><span class="op">)</span> <span class="op">{</span> <span class="co">// the num is like &quot;0123&quot; not like &quot;0&quot;</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> move_step <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>num<span class="op">[</span>move_step<span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;0&#39;</span> <span class="op">&amp;&amp;</span> len_s <span class="op">-</span> k <span class="op">&gt;</span> move_step <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>      move_step <span class="op">++;</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> <span class="op">&amp;</span>num<span class="op">[</span>move_step<span class="op">];</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> num<span class="op">;</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="时间空间复杂度" class="slide level2">
+<h2>时间空间复杂度：</h2>
+<p>空间复杂度分析：临时变量的开销；共 4 ==&gt; O(1)</p>
+<p>时间复杂度分析：</p>
+<ul>
+<li>最优情况：<code>n = k</code>，(n表示数字字符长度，k表示要删除字符个数) 即数字字符长度等于要删除字符的长度
+<ul>
+<li>例如：<code>num = "123"，k = 3</code> （num 表示数字字符）</li>
+<li>时间复杂度为 <span class="math display"><em>O</em>(1)</span></li>
+</ul></li>
+<li>最坏情况：<code>n = k - 1</code> 且最后一个字符小于其前面所有字符 (n表示数字字符长度，k表示要删除字符个数)
+<ul>
+<li>例如：<code>num = "1234567890", k = 9</code> (num 表示数字字符)</li>
+<li>时间复杂度：<span class="math display"><em>O</em>(<em>n</em><sup>2</sup>)</span></li>
+</ul></li>
+<li>平均情况：<span class="math display"><em>O</em>(<em>n</em><sup>2</sup>)</span></li>
+</ul>
+<p><strong>提交截图：</strong></p>
+<p><img src=".\img\贪心算法-1.png" style="zoom:90%;" /></p>
+</section>
+<section id="优化版本" class="slide level2">
+<h2>优化版本：</h2>
+<blockquote>
+<p>由于每次删除字符导致运行时间加长，照成的开销过大，从而采用堆栈存储不需要删除的数字</p>
+</blockquote>
+<p>函数主体</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// the remove number must be the ordered</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">// greed</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span><span class="op">*</span> removeKdigits_i<span class="op">(</span><span class="dt">char</span><span class="op">*</span> num<span class="op">,</span> <span class="dt">int</span> k<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> len_s <span class="op">=</span> strlen<span class="op">(</span>num<span class="op">),</span> top <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> stack <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>len_s<span class="op">));</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> len_s<span class="op">;</span> <span class="op">++</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// will be delete num is not 0 </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and stack is not empty</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and the top num of stack is less than num[i]</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>k <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> top <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> stack<span class="op">[</span>top <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">&gt;</span> num<span class="op">[</span>i<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      POP_STACK<span class="op">;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      k <span class="op">--;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>   PUSH_STACK<span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">// if k != 0 then delete the stack last k nums</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  top <span class="op">-=</span> k<span class="op">;</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>top <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> <span class="co">// when the stack is empty, it indicate that all the num is delete</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    stack<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;0&#39;</span><span class="op">;</span> stack<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// when the stack is not empty</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> move_step <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// define the num string size which is start by 0</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// calculate the size of start by 0 num</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>stack<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;0&#39;</span> <span class="op">&amp;&amp;</span> move_step <span class="op">&lt;</span> top <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> move_step <span class="op">++;</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">// let string point to the first one which is not start by 0</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> <span class="op">&amp;</span>stack<span class="op">[</span>move_step<span class="op">];</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    stack<span class="op">[</span>top <span class="op">-</span> move_step<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> stack<span class="op">;</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="时间空间复杂度-1" class="slide level2">
+<h2>时间空间复杂度：</h2>
+<p>空间复杂度分析：临时变量的开销；共 <span class="math display"><em>n</em> + 4 =  =  &gt; <em>O</em>(<em>n</em>)</span></p>
+<p>空间复杂度：</p>
+<ul>
+<li>最优情况：<code>n = 0</code>，(n表示数字字符长度，k表示要删除字符个数) 即数字字符长度等于要删除字符的长度
+<ul>
+<li>例如：<code>num = ""，k = 0</code> （num 表示数字字符）</li>
+<li>时间复杂度为 <span class="math display"><em>O</em>(1)</span></li>
+</ul></li>
+<li>最坏情况：<code>n = k - 1</code> 且最后一个字符小于其前面所有字符 (n表示数字字符长度，k表示要删除字符个数)
+<ul>
+<li>例如：<code>num = "1234567890", k = 9</code> (num 表示数字字符)</li>
+<li>时间复杂度：<span class="math display"><em>O</em>(2<em>n</em>)</span></li>
+</ul></li>
+<li>平均情况：<span class="math display"><em>O</em>(<em>n</em>)</span></li>
+</ul>
+<p><strong>提交截图：</strong></p>
+<p><img src=".\img\贪心算法-2.png" style="zoom:90%;" /></p>
+</section></section>
+<section>
+<section id="动态规划" class="title-slide slide level1">
+<h1>动态规划</h1>
+
+</section>
+<section id="题目描述-1" class="slide level2">
+<h2>题目描述</h2>
+<p><a href="https://leetcode.cn/problems/longest-palindromic-subsequence/">516. 最长回文子序列</a>【中等】</p>
+<blockquote>
+<p>给你一个字符串 <code>s</code> ，找出其中最长的回文子序列，并返回该序列的长度。</p>
+<p>子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。</p>
+</blockquote>
+<p><strong>示例 1： </strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>输入：s = &quot;bbbab&quot;</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>输出：4</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>解释：一个可能的最长回文子序列为 &quot;bbbb&quot; 。</span></code></pre></div>
+<p><strong>示 例 2：</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>输入：s = &quot;cbbd&quot;</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>输出：2</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>解释：一个可能的最长回文子序列为 &quot;bb&quot; 。</span></code></pre></div>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 1000</code></li>
+<li><code>s</code> 仅由小写英文字母组成</li>
+</ul>
+</section>
+<section id="解体思路" class="slide level2">
+<h2>解体思路：</h2>
+<p><strong>剖析问题：</strong></p>
+<ul>
+<li>问题具有 <strong>最优子结构</strong> ，即字符串 <code>s</code> 从 <code>i</code> 到 <code>j</code> (<code>0 &lt;= i &lt; s.length, 0 &lt;= j &lt; s.length</code>) 中存在最长的回文字符串。</li>
+<li>问题具有 <strong>重叠子问题</strong> ，即字符串 <code>s</code> 为一直求解从 <code>i</code> 到 <code>j</code> (<code>0 &lt;= i &lt; s.length, 0 &lt;= j &lt; s.length</code>) 中存在最长的回文字符串。</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>状态转移方程：</strong> <img src="./img/动态规划动态转移方程.png" style="zoom:60%;" /></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p><code>dp[i][j]</code> 描述为从 <code>i</code> 到 <code>j</code> 的最长序列，初始化为 0</p></li>
+<li><p>查找从 <code>i</code> 到 <code>j</code> 中最大的回文序列</p></li>
+<li><p>每个对角线元素都应填为 1，由于从 <code>i</code> 到 <code>i</code> 为一个回文序列</p></li>
+</ul>
+</div>
+</div>
+<div style="display: none;">
+<span class="math display">$$f(x) = \begin{cases} dp[i][j] = dp[i-1][j-1] + 2, &amp; s[i] = s[j], \\ dp[i][j] = max(dp[i+1][j], dp[i][j - 1]), &amp; s[i] \neq s[j], \end{cases}$$</span>
+</div>
+<p><strong>图文描述：</strong></p>
+<table>
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 11%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>i</th>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>b</td>
+<td>b</td>
+<td>b</td>
+<td>a</td>
+<td>b</td>
+</tr>
+<tr class="even">
+<td><strong>0</strong></td>
+<td>b</td>
+<td><font color="blue">1</font></td>
+<td><font color="red"><code>dp[1][0] + 2 = 2</code></font></td>
+<td><font color="red"><code>dp[1][1] + 2 = 3</code></font></td>
+<td><font color="red"><code>Max(dp[1][3], dp[0][2]) = 3</code></font></td>
+<td><font color="red"><code>dp[2][3] + 2 = 4</code></font></td>
+</tr>
+<tr class="odd">
+<td><strong>1</strong></td>
+<td>b</td>
+<td><font color="grey">0</font></td>
+<td><font color="blue">1</font></td>
+<td><font color="red"><code>dp[2][1] + 2 = 2</code></font></td>
+<td><font color="red"><code>Max(dp[2][3], dp[1][2]) = 2</code></font></td>
+<td><font color="red"><code>dp[2][3] + 2 = 3</code></font></td>
+</tr>
+<tr class="even">
+<td><strong>2</strong></td>
+<td>b</td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="blue">1</font></td>
+<td><font color="red"><code>Max(dp[4][4], dp[3][4]) = 1</code></font></td>
+<td><font color="red"><code>dp[3][3] + 2 = 3</code></font></td>
+</tr>
+<tr class="odd">
+<td><strong>3</strong></td>
+<td>a</td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="blue">1</font></td>
+<td><font color="red"><code>Max(dp[4][4], dp[3][4]) = 1</code></font></td>
+</tr>
+<tr class="even">
+<td><strong>4</strong></td>
+<td>b</td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="grey">0</font></td>
+<td><font color="blue">1</font></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="代码" class="slide level2">
+<h2>代码</h2>
+<p>项目所使用的头文件：</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp"># include </span><span class="im">&lt;string.h&gt;</span></span></code></pre></div>
+<p>项目中定义的宏</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp"># define MAX(X, Y) (X &gt; Y ? X : Y)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 定义所在列数的宏</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="pp"># define COL      j</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="pp"># define COL_NEXT j + 1</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="pp"># define COL_PRE  j - 1</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">// 定义所在行数的宏</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="pp"># define ROW      (i % 2)</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="pp"># define ROW_NEXT ((i + 1) % 2)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="pp"># define ROW_PRE  ROW_NEXT</span></span></code></pre></div>
+<p>执行函数：</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> execlongestPalindromeSubseq<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> s<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;aabaa&quot;</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> res <span class="op">=</span> longestPalindromeSubseq_i<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;the longest sequence length is %d</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> res<span class="op">);</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="初代版本" class="slide level2">
+<h2>初代版本</h2>
+<p>函数主体</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> longestPalindromeSubseq<span class="op">(</span><span class="dt">char</span><span class="op">*</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> len_s <span class="op">=</span> strlen<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> dp<span class="op">[</span>len_s<span class="op">][</span>len_s<span class="op">];</span> <span class="co">// dp[i][j] indicate the max palindrome subsequent which is belong the space from i to j</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  memset<span class="op">(</span>dp<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>dp<span class="op">));</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> len_s <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    dp<span class="op">[</span>i<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// each diagonal is 1</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> len_s<span class="op">;</span> <span class="op">++</span> j<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>s<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> s<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span> <span class="co">// when s[i] == s[j] then let dp[i][j] plus the begin and end</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        dp<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> dp<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">+</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// when s[i] != s[j] then choose the max between from i+1 to j and from i to j-1</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        dp<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> MAX<span class="op">(</span>dp<span class="op">[</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>j<span class="op">],</span> dp<span class="op">[</span>i<span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">// due to the algorithm is reverse deduce the max subsequent</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> dp<span class="op">[</span><span class="dv">0</span><span class="op">][</span>len_s <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="时间空间复杂度-2" class="slide level2">
+<h2>时间空间复杂度：</h2>
+<ul>
+<li><p>空间复杂度分析：由于采用二维数组造成的开销，以及临时变量的开销；共 <span class="math display"><em>n</em><sup>2</sup> + 3 =  =  &gt; <em>O</em>(<em>n</em><sup>2</sup>)</span> (n 为字符长度)</p></li>
+<li><p>时间复杂度分析：采用两层嵌套循环 + 对数组的初始化；共 <span class="math display"><em>n</em><sup>2</sup> * 2 =  =  &gt; <em>O</em>(<em>n</em><sup>2</sup>)</span> (n 为字符长度)</p></li>
+</ul>
+<p><strong>提交截图：</strong></p>
+<p><img src="./img/动态规划算法-1.png" style="zoom:90%;" /></p>
+</section>
+<section id="优化版本-1" class="slide level2">
+<h2>优化版本</h2>
+<blockquote>
+<p>由于状态数组开辟的过大，导致该程序的空间复杂度过高，从而降低数组容量。由此而改进的代码如下。</p>
+</blockquote>
+<p>代码主体</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> longestPalindromeSubseq_i<span class="op">(</span><span class="dt">char</span><span class="op">*</span> s<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> len_s <span class="op">=</span> strlen<span class="op">(</span>s<span class="op">),</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> dp<span class="op">[</span><span class="dv">2</span><span class="op">][</span>len_s<span class="op">];</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  memset<span class="op">(</span>dp<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>dp<span class="op">));</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> len_s <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">--</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    dp<span class="op">[</span>ROW<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> len_s<span class="op">;</span> <span class="op">++</span> j<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>s<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> s<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        dp<span class="op">[</span>ROW<span class="op">][</span>COL<span class="op">]</span> <span class="op">=</span> dp<span class="op">[</span>ROW_NEXT<span class="op">][</span>COL_PRE<span class="op">]</span> <span class="op">+</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        dp<span class="op">[</span>ROW<span class="op">][</span>COL<span class="op">]</span> <span class="op">=</span> MAX<span class="op">(</span>dp<span class="op">[</span>ROW_NEXT<span class="op">][</span>COL<span class="op">],</span> dp<span class="op">[</span>ROW<span class="op">][</span>COL_PRE<span class="op">]);</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> dp<span class="op">[</span>ROW_PRE<span class="op">][</span>len_s <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="时间空间复杂度-3" class="slide level2">
+<h2>时间空间复杂度：</h2>
+<ul>
+<li><p>空间复杂度分析：由于采用二维数组造成的开销，以及临时变量的开销；共 <span class="math display">2<em>n</em> + 3 =  =  &gt; <em>O</em>(<em>n</em>)</span> (n 为字符长度)</p></li>
+<li><p>时间复杂度分析：采用两层嵌套循环 + 对数组的初始化；共 <span class="math display"><em>n</em><sup>2</sup> + 2<em>n</em> =  =  &gt; <em>O</em>(<em>n</em><sup>2</sup>)</span> (n 为字符长度)</p></li>
+</ul>
+<p><strong>提交截图：</strong></p>
+<p><img src=".\img\动态规划算法-2.png" style="zoom:90%;" /></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: false,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

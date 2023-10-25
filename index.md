@@ -2,9 +2,9 @@
 
 ---
 
-汇报人：XXX
+汇报人：王立辉
 
-<link rel="stylesheet" href="user.css">
+<link rel="stylesheet" href="style/user.css">
 
 
 
@@ -116,6 +116,8 @@ int execRemoveKdigits() {
 
 ## 函数主体
 
+功能函数：
+
 ```c
 void removeKdigit(char* num, int index, int length) {
   for (; index < length - 1; ++ index) {
@@ -123,7 +125,11 @@ void removeKdigit(char* num, int index, int length) {
   }
   num[length - 1] = '\0';
 }
+```
 
+函数主体：
+
+```c
 char* removeKdigits(char* num, int k) {
   int len_s = strlen(num), temp = k;
 
@@ -168,7 +174,7 @@ char* removeKdigits(char* num, int k) {
 
 ## 时间空间复杂度：
 
-空间复杂度分析：临时变量的开销；共 $$4 ==> O(1)$$ 
+空间复杂度分析：临时变量的开销；共 4 ==> O(1)
 
 时间复杂度分析：
 
@@ -188,6 +194,10 @@ char* removeKdigits(char* num, int k) {
 
 ## 优化版本：
 
+> 由于每次删除字符导致运行时间加长，照成的开销过大，从而采用堆栈存储不需要删除的数字
+
+函数主体
+
 ```c
 // the remove number must be the ordered
 // greed
@@ -196,19 +206,25 @@ char* removeKdigits_i(char* num, int k) {
   char* stack = malloc(sizeof(len_s));
 
   for (int i = 0; i < len_s; ++ i) {
+    // will be delete num is not 0 
+    // and stack is not empty
+    // and the top num of stack is less than num[i]
     while (k > 0 && top > 0 && stack[top - 1] > num[i]) {
       POP_STACK;
       k --;
     }
    PUSH_STACK;
   }
+  // if k != 0 then delete the stack last k nums
   top -= k;
 
-  if (top == 0) {
+  if (top == 0) { // when the stack is empty, it indicate that all the num is delete
     stack[0] = '0'; stack[1] = 0;
-  } else {
-    int move_step = 0;
+  } else { // when the stack is not empty
+    int move_step = 0; // define the num string size which is start by 0
+    // calculate the size of start by 0 num
     while (stack[0] == '0' && move_step < top - 1) move_step ++;
+    // let string point to the first one which is not start by 0
     stack = &stack[move_step];
     stack[top - move_step] = 0;
   }
@@ -222,9 +238,17 @@ char* removeKdigits_i(char* num, int k) {
 
 ## 时间空间复杂度：
 
-- 空间复杂度分析：临时变量的开销；共 $$n + 4 ==> O(n)$$ 
+空间复杂度分析：临时变量的开销；共 $$n + 4 ==> O(n)$$ 
 
-- 时间复杂度分析：O(n)
+空间复杂度：
+
+- 最优情况：``n = 0``，(n表示数字字符长度，k表示要删除字符个数) 即数字字符长度等于要删除字符的长度 
+  - 例如：``num = ""，k = 0`` （num 表示数字字符）
+  - 时间复杂度为 $$O(1)$$ 
+- 最坏情况：``n = k - 1`` 且最后一个字符小于其前面所有字符 (n表示数字字符长度，k表示要删除字符个数) 
+  - 例如：``num = "1234567890", k = 9`` (num 表示数字字符) 
+  - 时间复杂度：$$O(2n)$$ 
+- 平均情况：$$O(n)$$ 
 
 **提交截图：** 
 
@@ -242,7 +266,7 @@ char* removeKdigits_i(char* num, int k) {
 >
 > 子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。
 
-**示例 1：**
+**示例 1： ** 
 
 ```md
 输入：s = "bbbab"
@@ -250,7 +274,7 @@ char* removeKdigits_i(char* num, int k) {
 解释：一个可能的最长回文子序列为 "bbbb" 。
 ```
 
-**示 例 2：**
+**示 例 2：** 
 
 ```md
 输入：s = "cbbd"
@@ -258,32 +282,48 @@ char* removeKdigits_i(char* num, int k) {
 解释：一个可能的最长回文子序列为 "bb" 。
 ```
 
-**提示：**
+**提示：** 
 
-- `1 <= s.length <= 1000`
+- `1 <= s.length <= 1000` 
 - `s` 仅由小写英文字母组成
 
 ---
 
 ## 解体思路：
 
-剖析问题：
+**剖析问题：** 
 
 - 问题具有 **最优子结构** ，即字符串 ``s`` 从 ``i`` 到 ``j`` (``0 <= i < s.length, 0 <= j < s.length``) 中存在最长的回文字符串。
 - 问题具有 **重叠子问题** ，即字符串 ``s`` 为一直求解从 ``i`` 到 ``j`` (``0 <= i < s.length, 0 <= j < s.length``) 中存在最长的回文字符串。
 
 :::::::::::::: {.columns}
-::: {.column width="20%"}
+::: {.column width="50%"}
 
-**状态转移方程：** 
+**状态转移方程：** <img src="./img/动态规划动态转移方程.png" style="zoom:60%;" />
 :::
-::: {.column width="80%"}
-<img src="./img/动态规划动态转移方程.png" style="zoom:60%;" />
+::: {.column width="50%"}
+
+- ``dp[i][j]`` 描述为从 ``i`` 到 ``j`` 的最长序列，初始化为 0
+- 查找从 ``i`` 到 ``j`` 中最大的回文序列
+
+- 每个对角线元素都应填为 1，由于从 ``i`` 到 ``i`` 为一个回文序列
 
 :::
 ::::::::::::::
 
 <div style="display: none;">$$f(x) = \begin{cases} dp[i][j] = dp[i-1][j-1] + 2, & s[i] = s[j], \\ dp[i][j] = max(dp[i+1][j], dp[i][j - 1]), & s[i] \neq s[j], \end{cases}$$</div>
+**图文描述：** 
+
+| i\j   |      | 0                           | 1                                             | 2                                             | 3                                                        | 4                                                        |
+| ----- | ---- | --------------------------- | --------------------------------------------- | --------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+|       |      | b                           | b                                             | b                                             | a                                                        | b                                                        |
+| **0** | b    | <font color="blue">1</font> | <font color="red">``dp[1][0] + 2 = 2``</font> | <font color="red">``dp[1][1] + 2 = 3``</font> | <font color="red">``Max(dp[1][3], dp[0][2]) = 3``</font> | <font color="red">``dp[2][3] + 2 = 4``</font>            |
+| **1** | b    | <font color="grey">0</font> | <font color="blue">1</font>                   | <font color="red">``dp[2][1] + 2 = 2``</font> | <font color="red">``Max(dp[2][3], dp[1][2]) = 2``</font> | <font color="red">``dp[2][3] + 2 = 3``</font>            |
+| **2** | b    | <font color="grey">0</font> | <font color="grey">0</font>                   | <font color="blue">1</font>                   | <font color="red">``Max(dp[4][4], dp[3][4]) = 1``</font> | <font color="red">``dp[3][3] + 2 = 3``</font>            |
+| **3** | a    | <font color="grey">0</font> | <font color="grey">0</font>                   | <font color="grey">0</font>                   | <font color="blue">1</font>                              | <font color="red">``Max(dp[4][4], dp[3][4]) = 1``</font> |
+| **4** | b    | <font color="grey">0</font> | <font color="grey">0</font>                   | <font color="grey">0</font>                   | <font color="grey">0</font>                              | <font color="blue">1</font>                              |
+
+
 
 ---
 
@@ -296,21 +336,20 @@ char* removeKdigits_i(char* num, int k) {
 # include <string.h>
 ```
 
-项目所定义的宏： 
+项目中定义的宏
 
 ```c
-// 定义比较大小的宏
 # define MAX(X, Y) (X > Y ? X : Y)
-
-// 定义所在行数的宏
-# define ROW      (i % 2)
-# define ROW_NEXT ((i + 1) % 2)
-# define ROW_PRE  ROW_NEXT
 
 // 定义所在列数的宏
 # define COL      j
 # define COL_NEXT j + 1
 # define COL_PRE  j - 1
+
+// 定义所在行数的宏
+# define ROW      (i % 2)
+# define ROW_NEXT ((i + 1) % 2)
+# define ROW_PRE  ROW_NEXT
 ```
 
 执行函数：
@@ -331,23 +370,27 @@ int execlongestPalindromeSubseq() {
 
 ## 初代版本
 
+函数主体
+
 ```c
 int longestPalindromeSubseq(char* s) {
   int len_s = strlen(s);
-  int dp[len_s][len_s];
-
+  int dp[len_s][len_s]; // dp[i][j] indicate the max palindrome subsequent which is belong the space from i to j
+  
   memset(dp, 0, sizeof(dp));
+  
   for (int i = len_s - 1; i >= 0; -- i) {
-    dp[i][i] = 1;
+    dp[i][i] = 1; // each diagonal is 1
     for (int j = i + 1; j < len_s; ++ j) {
-      if (s[i] == s[j]) {
+      if (s[i] == s[j]) { // when s[i] == s[j] then let dp[i][j] plus the begin and end
         dp[i][j] = dp[i + 1][j - 1] + 2;
-      } else {
+      } else { // when s[i] != s[j] then choose the max between from i+1 to j and from i to j-1
         dp[i][j] = MAX(dp[i + 1][j], dp[i][j - 1]);
       }
     }
   }
 
+  // due to the algorithm is reverse deduce the max subsequent
   return dp[0][len_s - 1];
 }
 ```
@@ -369,6 +412,8 @@ int longestPalindromeSubseq(char* s) {
 ## 优化版本
 
 > 由于状态数组开辟的过大，导致该程序的空间复杂度过高，从而降低数组容量。由此而改进的代码如下。
+
+代码主体
 
 ```c
 int longestPalindromeSubseq_i(char* s) {
