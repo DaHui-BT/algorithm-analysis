@@ -1,8 +1,10 @@
 %算法分析
 
----
+::: {font-size="28px"}
 
-汇报人：王立辉
+汇报人：王立辉、李宇航
+
+:::
 
 <link rel="stylesheet" href="style/user.css">
 
@@ -96,7 +98,6 @@
 
 ```c
 int execRemoveKdigits() {
-
   // char num[] = "1432219", k = 3;
   // char num[] = "10200", k = 1;
   // char num[] = "9", k = 1;
@@ -450,7 +451,326 @@ int longestPalindromeSubseq_i(char* s) {
 
 
 
+# 最短路径
+
+## 题目描述
+
+ [743. 网络延迟时间](https://leetcode.cn/problems/network-delay-time/) 【中等】
+
+有 `n` 个网络节点，标记为 `1` 到 `n`。
+
+给你一个列表 `times`，表示信号经过 **有向** 边的传递时间。 `times[i] = (ui, vi, wi)`，其中 `ui` 是源节点，`vi` 是目标节点， `wi` 是一个信号从源节点传递到目标节点的时间。
+
+现在，从某个节点 `K` 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 `-1` 。
+
+:::::::::::::: {.columns}
+::: {.column width="70%"}
+
+**示例 1：**
+
+```
+输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+输出：2
+```
+
+**示例 2：**
+
+```
+输入：times = [[1,2,1]], n = 2, k = 1
+输出：1
+```
+
+**示例 3：**
+
+```
+输入：times = [[1,2,1]], n = 2, k = 2
+输出：-1
+```
+
+:::
+
+::: {.column width="30%"}
+
+![](img/最短路径-example.png)
+
+:::
+
+::::::::::::::
+
+---
+
+## 图示过程
+
+![](img\最短路径-1.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-2.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-3.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-4.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-5.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-6.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-7.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-8.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-9.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-10.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-11.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-12.png)
+
+---
+
+## 图示过程
+
+![](img\最短路径-13.png)
+
+---
+
+## 代码分析
+
+```c
+//G为图，数组d为源点到达各点的最短路径长度，s为起点
+Dijkstra(G,d[],s)
+{
+	初始化；
+	for(循环n次)
+	{
+		u = 使d[u]最小的还未被访问的顶点的标号；
+		标记u为已被访问；
+		for(从u出发能到达的所有顶点v)
+		{
+			if(v未被访问&&以u为中介点使s到顶点v的最短距离d[v]更优)
+			{
+				优化d[v]；
+				(令u为v的前驱)用于求最短路径本身
+			}
+		}
+	}
+}
+// 递归求最短路径：
+void DFS(int s,int v)//s为起点编号，v为当前访问的顶点编号(从终点开始递归)
+{
+	if(v==s)//如果当前已经到达起点s，则输出起点并返回
+	{
+		printf("%d\n",s);
+		return;
+	}
+	DFS(s,pre[v]);//递归访问v的前驱顶点pre[v]
+	printf("%d\n",v);//从最深处return回来之后，输出每一层的顶点号
+}
+```
+
+---
+
+## 算法设计
+
+```python
+class Solution(object):
+    def networkDelayTime(self, times, n, k):
+        """
+        :type times: List[List[int]]
+        :type n: int
+        :type k: int
+        :rtype: int
+        """
+        SEEN ={}
+    	UNSEEN = {i+1:float('inf') for i in range(n)}
+    	UNSEEN[k]=0
+
+    	while len(SEEN)<n:
+            temp = list(UNSEEN.items())    #将字典中所有的键值对转变为列表
+            temp.sort(key= lambda x:x[1])  #将字典按值排序
+
+            for i in range(len(temp)):     #遍历每个节点
+                # 如果第i个节点不在SEEN中
+                if temp[i][0] not in SEEN:
+                    #将键-值对 temp[i][0]:temp[i][1]写入SEEN中
+                    SEEN[temp[i][0]]=temp[i][1]
+
+                    for link in times:
+                        ui,vi,wi = link
+                        if ui==temp[i][0]:
+                            UNSEEN[vi] = min(UNSEEN[vi],SEEN[temp[i][0]]+wi)
+                    break
+    	s = list(SEEN.items())
+    	s.sort(key= lambda x:x[1],reverse=True)
+    	res =s[0][1]  if s[0][1]!=float('inf') else -1
+    	return res
+
+```
+
+:::::::::::::: {.columns}
+::: {.column width="50%"}
+
+- 时间复杂度为：$$O(n^2)$$ ，其中 n 是节点数
+
+:::
+
+::: {.column width="50%"}
+
+- 空间复杂度为：$$O(n)$$ 
+
+:::
+::::::::::::::
+
+**运行结果** 
+
+<img src="./img/最短路径运行结果.png" style="zoom:80%;" />
 
 
 
+# 分治算法
+
+## 题目描述
+
+[50. Pow(x, n)](https://leetcode.cn/problems/powx-n/) 【中等】
+
+实现 [pow(*x*, *n*)](https://www.cplusplus.com/reference/valarray/pow/) ，即计算 `x` 的整数 `n` 次幂函数（即，`xn` ）。 
+
+**示例 1：**
+
+```
+输入：x = 2.00000, n = 10
+输出：1024.00000
+```
+
+**示例 2：**
+
+```
+输入：x = 2.10000, n = 3
+输出：9.26100
+```
+
+**示例 3：**
+
+```
+输入：x = 2.00000, n = -2
+输出：0.25000
+解释：2-2 = 1/22 = 1/4 = 0.25
+```
+
+---
+
+## 解题分析
+
+- 例：求 $$x^{64}$$ ，可以按照 $$x^1->x^2->x^4->x^8->x^{16}->x^{32}->x^{64}$$ 
+
+  从 x 开始，每次直接把上一次的结果进行平方，计算 6 次就可以得到 $$x^{64}$$ 的值，而不需要对 x 乘 63 次 x 。
+
+- 例：求 $$x^{67}$$ ，可以按照  $$x^1->x^2->x^4->x^9->x^{19}->x^{38}->x^{77}$$ 
+  -  $$x^1->x^2, x^2->x^4, x^{19}->x^{38}$$ 这些步骤中可以直接把上一次的结果进行平方
+  - $$x^4->x^9, x^9->x^{19}, x^{38}->x^{77}$$ 这些步骤中则需要在上一次的结果进行平方后再乘 x
+
+1. 可以从右往左分析，要计算 $$x^n$$ 时，我们可以先递归地计算出 $$y=x^{⌊n/2⌋}$$ ；
+2. 根据递归计算的结果,如果n为偶数,那么 $$x^n=y^2$$ ;如果n为奇数,那么 $$x^n=y^{2} * x$$ ；
+3. 递归的边界为 n=0 ，任意数的 0 次方均为 1 ；
+
+**伪代码描述：** 
+
+```python
+Divide-and-Conquer
+	if P≤n0								 # P表示问题的规模,n0为下限
+    	then return(表达式)　　			  # 当问题的规模小于某个数后,就能直接求出,不用再分解
+    DivideP-> P1 ,P2 ,…,Pk　　			# 将P分解为较小的子问题
+    for i=1 to k　　
+    	do = Divide-and-Conquer(Pi) 		# 递归解决Pi　　
+    T = MERGE(y1,y2,…,yk) 					# 合并子问题　　
+```
+
+---
+
+## 算法设计
+
+```python
+class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        def quickMul(n):
+            # 如果n是0，则返回1    因为任意x的0次方都是1
+            if n == 0:
+                return 1.0
+            # 如果n不为0
+            y = quickMul(n // 2)
+            # 若n是偶数，则返回y的平方
+            # 若n是奇数，则返回y的平方再乘x
+            if n % 2 == 0:
+                return y * y
+            else:
+                return y * y * x
+        return quickMul(n) if n >= 0 else 1.0 / quickMul(-n)
+
+```
+
+:::::::::::::: {.columns}
+::: {.column width="40%"}
+
+- 时间复杂度:O(logn)。即为递归的层数；
+
+:::
+
+::: {.column width="60%"}
+
+- 空间复杂度:O(logn)。即为递归的层数，因为递归的函数调用会使用栈空间
+
+:::
+::::::::::::::
+
+运行结果：
+
+<img src="img\分治算法-运行结果.png" style="zoom:80%;" />
 

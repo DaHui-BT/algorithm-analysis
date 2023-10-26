@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <link rel="stylesheet" href="include/reset.css">
+  <link rel="stylesheet" href="include/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="include/theme/white.css" id="theme">
 </head>
 <body>
   <div class="reveal">
@@ -93,7 +93,9 @@
 
 <section class="slide level2">
 
-<p>汇报人：王立辉</p>
+<div data-font-size="28px">
+<p>汇报人：王立辉、李宇航</p>
+</div>
 <p><link rel="stylesheet" href="style/user.css"></p>
 </section>
 <section>
@@ -163,20 +165,19 @@
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="pp"># define PUSH_STACK stack[top ++] = num[i]</span></span></code></pre></div>
 <p>执行函数：</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> execRemoveKdigits<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1432219&quot;, k = 3;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;10200&quot;, k = 1;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;9&quot;, k = 1;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;100&quot;, k = 1;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;112&quot;, k = 1;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1234567890&quot;, k = 9;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> num<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;10001&quot;</span><span class="op">,</span> k <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> res <span class="op">=</span> removeKdigits<span class="op">(</span>num<span class="op">,</span> k<span class="op">);</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;the minmum number is %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> res<span class="op">);</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1432219&quot;, k = 3;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;10200&quot;, k = 1;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;9&quot;, k = 1;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;100&quot;, k = 1;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;112&quot;, k = 1;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// char num[] = &quot;1234567890&quot;, k = 9;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> num<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;10001&quot;</span><span class="op">,</span> k <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span><span class="op">*</span> res <span class="op">=</span> removeKdigits<span class="op">(</span>num<span class="op">,</span> k<span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">&quot;the minmum number is %s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> res<span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="函数主体" class="slide level2">
 <h2>函数主体</h2>
@@ -528,15 +529,254 @@
 <p><strong>提交截图：</strong></p>
 <p><img src=".\img\动态规划算法-2.png" style="zoom:90%;" /></p>
 </section></section>
+<section>
+<section id="最短路径" class="title-slide slide level1">
+<h1>最短路径</h1>
+
+</section>
+<section id="题目描述-2" class="slide level2">
+<h2>题目描述</h2>
+<p><a href="https://leetcode.cn/problems/network-delay-time/">743. 网络延迟时间</a> 【中等】</p>
+<p>有 <code>n</code> 个网络节点，标记为 <code>1</code> 到 <code>n</code>。</p>
+<p>给你一个列表 <code>times</code>，表示信号经过 <strong>有向</strong> 边的传递时间。 <code>times[i] = (ui, vi, wi)</code>，其中 <code>ui</code> 是源节点，<code>vi</code> 是目标节点， <code>wi</code> 是一个信号从源节点传递到目标节点的时间。</p>
+<p>现在，从某个节点 <code>K</code> 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 <code>-1</code> 。</p>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+输出：2</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：times = [[1,2,1]], n = 2, k = 1
+输出：1</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：times = [[1,2,1]], n = 2, k = 2
+输出：-1</code></pre>
+</div><div class="column" style="width:30%;">
+<p><img data-src="img/最短路径-example.png" /></p>
+</div>
+</div>
+</section>
+<section id="图示过程" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-1.png" /></p>
+</section>
+<section id="图示过程-1" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-2.png" /></p>
+</section>
+<section id="图示过程-2" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-3.png" /></p>
+</section>
+<section id="图示过程-3" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-4.png" /></p>
+</section>
+<section id="图示过程-4" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-5.png" /></p>
+</section>
+<section id="图示过程-5" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-6.png" /></p>
+</section>
+<section id="图示过程-6" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-7.png" /></p>
+</section>
+<section id="图示过程-7" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-8.png" /></p>
+</section>
+<section id="图示过程-8" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-9.png" /></p>
+</section>
+<section id="图示过程-9" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-10.png" /></p>
+</section>
+<section id="图示过程-10" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-11.png" /></p>
+</section>
+<section id="图示过程-11" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-12.png" /></p>
+</section>
+<section id="图示过程-12" class="slide level2">
+<h2>图示过程</h2>
+<p><img data-src="img\最短路径-13.png" /></p>
+</section>
+<section id="代码分析" class="slide level2">
+<h2>代码分析</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">//G为图，数组d为源点到达各点的最短路径长度，s为起点</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Dijkstra<span class="op">(</span>G<span class="op">,</span>d<span class="op">[],</span>s<span class="op">)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    初始化；</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>循环n次<span class="op">)</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> 使d<span class="op">[</span>u<span class="op">]</span>最小的还未被访问的顶点的标号；</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        标记u为已被访问；</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span>从u出发能到达的所有顶点v<span class="op">)</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>v未被访问<span class="op">&amp;&amp;</span>以u为中介点使s到顶点v的最短距离d<span class="op">[</span>v<span class="op">]</span>更优<span class="op">)</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                优化d<span class="op">[</span>v<span class="op">]</span>；</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                <span class="op">(</span>令u为v的前驱<span class="op">)</span>用于求最短路径本身</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co">// 递归求最短路径：</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> DFS<span class="op">(</span><span class="dt">int</span> s<span class="op">,</span><span class="dt">int</span> v<span class="op">)</span><span class="co">//s为起点编号，v为当前访问的顶点编号(从终点开始递归)</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>v<span class="op">==</span>s<span class="op">)</span><span class="co">//如果当前已经到达起点s，则输出起点并返回</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span>s<span class="op">);</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    DFS<span class="op">(</span>s<span class="op">,</span>pre<span class="op">[</span>v<span class="op">]);</span><span class="co">//递归访问v的前驱顶点pre[v]</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span>v<span class="op">);</span><span class="co">//从最深处return回来之后，输出每一层的顶点号</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="算法设计" class="slide level2">
+<h2>算法设计</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Solution(<span class="bu">object</span>):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> networkDelayTime(<span class="va">self</span>, times, n, k):</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">        :type times: List[List[int]]</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">        :type n: int</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">        :type k: int</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">        :rtype: int</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        SEEN <span class="op">=</span>{}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        UNSEEN <span class="op">=</span> {i<span class="op">+</span><span class="dv">1</span>:<span class="bu">float</span>(<span class="st">&#39;inf&#39;</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)}</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        UNSEEN[k]<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="bu">len</span>(SEEN)<span class="op">&lt;</span>n:</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            temp <span class="op">=</span> <span class="bu">list</span>(UNSEEN.items())    <span class="co">#将字典中所有的键值对转变为列表</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>            temp.sort(key<span class="op">=</span> <span class="kw">lambda</span> x:x[<span class="dv">1</span>])  <span class="co">#将字典按值排序</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(temp)):     <span class="co">#遍历每个节点</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                <span class="co"># 如果第i个节点不在SEEN中</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> temp[i][<span class="dv">0</span>] <span class="kw">not</span> <span class="kw">in</span> SEEN:</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                    <span class="co">#将键-值对 temp[i][0]:temp[i][1]写入SEEN中</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                    SEEN[temp[i][<span class="dv">0</span>]]<span class="op">=</span>temp[i][<span class="dv">1</span>]</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> link <span class="kw">in</span> times:</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                        ui,vi,wi <span class="op">=</span> link</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> ui<span class="op">==</span>temp[i][<span class="dv">0</span>]:</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                            UNSEEN[vi] <span class="op">=</span> <span class="bu">min</span>(UNSEEN[vi],SEEN[temp[i][<span class="dv">0</span>]]<span class="op">+</span>wi)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> <span class="bu">list</span>(SEEN.items())</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        s.sort(key<span class="op">=</span> <span class="kw">lambda</span> x:x[<span class="dv">1</span>],reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>        res <span class="op">=</span>s[<span class="dv">0</span>][<span class="dv">1</span>]  <span class="cf">if</span> s[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">!=</span><span class="bu">float</span>(<span class="st">&#39;inf&#39;</span>) <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> res</span></code></pre></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>时间复杂度为：<span class="math display"><em>O</em>(<em>n</em><sup>2</sup>)</span> ，其中 n 是节点数</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>空间复杂度为：<span class="math display"><em>O</em>(<em>n</em>)</span></li>
+</ul>
+</div>
+</div>
+<p><strong>运行结果</strong></p>
+<p><img src="./img/最短路径运行结果.png" style="zoom:80%;" /></p>
+</section></section>
+<section>
+<section id="分治算法" class="title-slide slide level1">
+<h1>分治算法</h1>
+
+</section>
+<section id="题目描述-3" class="slide level2">
+<h2>题目描述</h2>
+<p><a href="https://leetcode.cn/problems/powx-n/">50. Pow(x, n)</a> 【中等】</p>
+<p>实现 <a href="https://www.cplusplus.com/reference/valarray/pow/">pow(<em>x</em>, <em>n</em>)</a> ，即计算 <code>x</code> 的整数 <code>n</code> 次幂函数（即，<code>xn</code> ）。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：x = 2.00000, n = 10
+输出：1024.00000</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：x = 2.10000, n = 3
+输出：9.26100</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：x = 2.00000, n = -2
+输出：0.25000
+解释：2-2 = 1/22 = 1/4 = 0.25</code></pre>
+</section>
+<section id="解题分析" class="slide level2">
+<h2>解题分析</h2>
+<ul>
+<li><p>例：求 <span class="math display"><em>x</em><sup>64</sup></span> ，可以按照 <span class="math display"><em>x</em><sup>1</sup> −  &gt; <em>x</em><sup>2</sup> −  &gt; <em>x</em><sup>4</sup> −  &gt; <em>x</em><sup>8</sup> −  &gt; <em>x</em><sup>16</sup> −  &gt; <em>x</em><sup>32</sup> −  &gt; <em>x</em><sup>64</sup></span></p>
+<p>从 x 开始，每次直接把上一次的结果进行平方，计算 6 次就可以得到 <span class="math display"><em>x</em><sup>64</sup></span> 的值，而不需要对 x 乘 63 次 x 。</p></li>
+<li><p>例：求 <span class="math display"><em>x</em><sup>67</sup></span> ，可以按照 <span class="math display"><em>x</em><sup>1</sup> −  &gt; <em>x</em><sup>2</sup> −  &gt; <em>x</em><sup>4</sup> −  &gt; <em>x</em><sup>9</sup> −  &gt; <em>x</em><sup>19</sup> −  &gt; <em>x</em><sup>38</sup> −  &gt; <em>x</em><sup>77</sup></span></p>
+<ul>
+<li><span class="math display"><em>x</em><sup>1</sup> −  &gt; <em>x</em><sup>2</sup>, <em>x</em><sup>2</sup> −  &gt; <em>x</em><sup>4</sup>, <em>x</em><sup>19</sup> −  &gt; <em>x</em><sup>38</sup></span> 这些步骤中可以直接把上一次的结果进行平方</li>
+<li><span class="math display"><em>x</em><sup>4</sup> −  &gt; <em>x</em><sup>9</sup>, <em>x</em><sup>9</sup> −  &gt; <em>x</em><sup>19</sup>, <em>x</em><sup>38</sup> −  &gt; <em>x</em><sup>77</sup></span> 这些步骤中则需要在上一次的结果进行平方后再乘 x</li>
+</ul></li>
+</ul>
+<ol type="1">
+<li>可以从右往左分析，要计算 <span class="math display"><em>x</em><sup><em>n</em></sup></span> 时，我们可以先递归地计算出 <span class="math display"><em>y</em> = <em>x</em><sup>⌊<em>n</em>/2⌋</sup></span> ；</li>
+<li>根据递归计算的结果,如果n为偶数,那么 <span class="math display"><em>x</em><sup><em>n</em></sup> = <em>y</em><sup>2</sup></span> ;如果n为奇数,那么 <span class="math display"><em>x</em><sup><em>n</em></sup> = <em>y</em><sup>2</sup> * <em>x</em></span> ；</li>
+<li>递归的边界为 n=0 ，任意数的 0 次方均为 1 ；</li>
+</ol>
+<p><strong>伪代码描述：</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Divide<span class="op">-</span><span class="kw">and</span><span class="op">-</span>Conquer</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> P≤n0                              <span class="co"># P表示问题的规模,n0为下限</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        then <span class="cf">return</span>(表达式)　　            <span class="co"># 当问题的规模小于某个数后,就能直接求出,不用再分解</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    DivideP<span class="op">-&gt;</span> P1 ,P2 ,…,Pk　　            <span class="co"># 将P分解为较小的子问题</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i<span class="op">=</span><span class="dv">1</span> to k　　</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        do <span class="op">=</span> Divide<span class="op">-</span><span class="kw">and</span><span class="op">-</span>Conquer(Pi)         <span class="co"># 递归解决Pi　　</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> MERGE(y1,y2,…,yk)                   <span class="co"># 合并子问题　　</span></span></code></pre></div>
+</section>
+<section id="算法设计-1" class="slide level2">
+<h2>算法设计</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Solution(<span class="bu">object</span>):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> myPow(<span class="va">self</span>, x, n):</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">        :type x: float</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">        :type n: int</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">        :rtype: float</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> quickMul(n):</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 如果n是0，则返回1    因为任意x的0次方都是1</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="fl">1.0</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 如果n不为0</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> quickMul(n <span class="op">//</span> <span class="dv">2</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 若n是偶数，则返回y的平方</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 若n是奇数，则返回y的平方再乘x</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> y <span class="op">*</span> y</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> y <span class="op">*</span> y <span class="op">*</span> x</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> quickMul(n) <span class="cf">if</span> n <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="fl">1.0</span> <span class="op">/</span> quickMul(<span class="op">-</span>n)</span></code></pre></div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li>时间复杂度:O(logn)。即为递归的层数；</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>空间复杂度:O(logn)。即为递归的层数，因为递归的函数调用会使用栈空间</li>
+</ul>
+</div>
+</div>
+<p>运行结果：</p>
+<p><img src="img\分治算法-运行结果.png" style="zoom:80%;" /></p>
+</section></section>
     </div>
   </div>
 
-  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+  <script src="include/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
-  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
-  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+  <script src="include/plugin/notes/notes.js"></script>
+  <script src="include/plugin/search/search.js"></script>
+  <script src="include/plugin/zoom/zoom.js"></script>
 
   <script>
 
